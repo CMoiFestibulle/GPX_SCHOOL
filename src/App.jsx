@@ -4899,6 +4899,50 @@ async function deleteStudent(name) {
   }
 }
 
+/* ----------------------------- AUTHENTIFICATION SERVEUR ----------------------------- */
+// Ces deux fonctions appellent les fonctions serverless dédiées quand elles
+// sont disponibles (déploiement Netlify réel). Si elles ne répondent pas
+// (ex : aperçu artefact Claude.ai, sans backend), ok vaut null : c'est le
+// signal pour retomber sur un fonctionnement local simplifié, sans jeton.
+
+async function verifierPinServeur(name, pin) {
+  try {
+    const res = await fetch("/api/verify-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, pin }),
+    });
+    const data = await res.json();
+    if (typeof data.ok === "undefined") return { ok: null };
+    return data;
+  } catch (e) {
+    // Pas de backend joignable (ex : aperçu artefact Claude.ai) ou réponse
+    // non JSON (page 404 générique) : signal pour le repli local.
+    return { ok: null };
+  }
+}
+
+async function adminAuthenticate(name) {
+  try {
+    const res = await fetch("/api/admin-auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    });
+    const data = await res.json();
+    if (typeof data.ok === "undefined") return { ok: null };
+    return data;
+  } catch (e) {
+    return { ok: null };
+  }
+}
+
+function definirJetonAuth(token) {
+  if (typeof window !== "undefined" && window.storage && typeof window.storage.setAuthToken === "function") {
+    window.storage.setAuthToken(token);
+  }
+}
+
 /* ----------------------------- SUPPORT / TICKETS ----------------------------- */
 
 async function listTickets() {
@@ -5025,8 +5069,22 @@ function Login({ C, onEnter }) {
     setError("");
 
     if (clean.toLowerCase() === ADMIN_NAME.toLowerCase()) {
-      // Accès admin direct, sans code : taper le prénom suffit.
+      // Accès admin direct, sans code : taper le prénom suffit. Le passage
+      // par le serveur sert uniquement à obtenir le jeton nécessaire aux
+      // actions sensibles (approbation, suppression, réponses support) —
+      // voir la remarque sur ce choix dans admin-auth.js.
       setChecking(true);
+      const resultat = await adminAuthenticate(ADMIN_NAME);
+      if (resultat.ok === false) {
+        setChecking(false);
+        setError(resultat.error || "Accès refusé.");
+        return;
+      }
+      if (resultat.ok === true) {
+        definirJetonAuth(resultat.token);
+      }
+      // resultat.ok === null : pas de backend disponible (aperçu Claude.ai) —
+      // on continue sans jeton, comme avant.
       let record = await loadStudent(ADMIN_NAME);
       if (!record) {
         record = defaultStudent(ADMIN_NAME, null, true);
@@ -5060,30 +5118,55 @@ function Login({ C, onEnter }) {
     setStep("attenteApprobation");
   };
 
-  const handleUnlock = () => {
-    if (existingRecord.pin && existingRecord.pin !== pin) {
-      setError("Code incorrect.");
+  const handleUnlock = async () => {
+    setChecking(true);
+    const resultat = await verifierPinServeur(name, pin);
+    setChecking(false);
+
+    let recordActuel = existingRecord;
+
+    if (resultat.ok === false) {
+      setError(resultat.error || "Code incorrect.");
       return;
+    } else if (resultat.ok === true) {
+      definirJetonAuth(resultat.token);
+      recordActuel = resultat.student;
+    } else {
+      // resultat.ok === null : pas de backend disponible (aperçu Claude.ai) —
+      // repli sur la vérification locale historique.
+      if (existingRecord.pin && existingRecord.pin !== pin) {
+        setError("Code incorrect.");
+        return;
+      }
     }
 
-    if (existingRecord.approuve === false) {
+    if (recordActuel.approuve === false) {
+      setExistingRecord(recordActuel);
       setStep("attenteApprobation");
       return;
     }
-    onEnter(existingRecord);
+    onEnter(recordActuel);
   };
 
   const revenirVerifierApprobation = async () => {
     setChecking(true);
-    const record = await loadStudent(name);
+    const resultat = await verifierPinServeur(name, pin);
+    let record = null;
+    if (resultat.ok === true) {
+      record = resultat.student;
+    } else if (resultat.ok === null) {
+      record = await loadStudent(name);
+    }
     setChecking(false);
-    if (record && record.approuve === false) {
+
+    if (!record || record.approuve === false) {
       setError("Ta session n'a pas encore été validée par l'administrateur.");
       return;
     }
-    if (record) {
-      onEnter(record);
+    if (resultat.ok === true) {
+      definirJetonAuth(resultat.token);
     }
+    onEnter(record);
   };
 
   const handleDisambiguate = async () => {
@@ -7248,7 +7331,6 @@ function AdminTab({ C }) {
               <div key={r.name} className="flex items-center justify-between gap-3 p-3 rounded-md flex-wrap" style={{ background: `${C.red}0A` }}>
                 <div>
                   <span className="font-semibold text-sm" style={{ color: C.ink }}>{r.name}</span>
-                  <span className="text-xs ml-2" style={{ color: C.slate }}>code : {r.pin}</span>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => handleApprouver(r)} className="text-xs px-3 py-1.5 rounded-md font-bold flex items-center gap-1" style={{ background: C.navy, color: "#fff" }}>
@@ -7282,7 +7364,7 @@ function AdminTab({ C }) {
                       {r.name} {r.isAdmin && <span style={{ color: C.gold }} className="text-xs">(admin)</span>}
                     </span>
                     <span className="text-xs px-2 py-0.5 rounded font-bold tracking-widest" style={{ background: `${C.gold}20`, color: C.gold }}>
-                      code : {r.pin}
+                      code protégé
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
@@ -7439,7 +7521,7 @@ export default function App() {
         <span className="text-sm font-semibold" style={{ color: "#fff" }}>
           {studentName} {student.isAdmin && <span style={{ color: C.goldSoft }} className="text-xs">(admin)</span>}
         </span>
-        <button onClick={() => { if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Te déconnecter abandonnera ta progression actuelle. Continuer ?")) return; setStudent(null); setStudentName(null); setTab("dashboard"); }} title="Changer de session">
+        <button onClick={() => { if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Te déconnecter abandonnera ta progression actuelle. Continuer ?")) return; definirJetonAuth(null); setStudent(null); setStudentName(null); setTab("dashboard"); }} title="Changer de session">
           <LogOut size={14} style={{ color: C.goldSoft }} />
         </button>
       </div>
