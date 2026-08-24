@@ -5843,6 +5843,17 @@ function validerEtapeCanevas(texte, motsCles) {
   return { valide, trouves, manquants, longueurSuffisante };
 }
 
+const TAILLE_SESSION_EXAMEN = 25;
+
+function tirerSessionExamen(pool, taille = TAILLE_SESSION_EXAMEN) {
+  const melange = [...pool];
+  for (let i = melange.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [melange[i], melange[j]] = [melange[j], melange[i]];
+  }
+  return melange.slice(0, taille);
+}
+
 function ExamensBlancs({ C, onExamEnCoursChange }) {
   const [mode, setMode] = useState("qcm");
   const [started, setStarted] = useState(false);
@@ -5856,10 +5867,11 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
   const [selecteurOuvert, setSelecteurOuvert] = useState(false);
   const [qcmActif, setQcmActif] = useState(false);
   const [audioActif, setAudioActif] = useState(false);
+  const [sessionQuestions, setSessionQuestions] = useState([]);
 
   const questionsRedigeesFiltrees = QUESTIONS_REDIGEES.filter((q) => matieresSelectionnees.includes(q.matiere));
   const qcmFiltre = QCM_QUESTIONS.filter((q) => matieresSelectionnees.includes(q.matiere));
-  const question = questionsRedigeesFiltrees[index];
+  const question = sessionQuestions[index];
   const estCorrecteAuto = verifie && question ? evaluerReponseAuto(reponse, question.motsCles) : null;
   const sessionEnCours = mode === "redaction" && started && !termine;
 
@@ -5879,6 +5891,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
   };
 
   const demarrer = () => {
+    setSessionQuestions(tirerSessionExamen(questionsRedigeesFiltrees));
     setStarted(true);
     setIndex(0);
     setReponse("");
@@ -5894,7 +5907,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
 
   const noter = (ok) => {
     setBilan((b) => ({ ...b, [ok ? "bien" : "revoir"]: b[ok ? "bien" : "revoir"] + 1 }));
-    if (index + 1 < questionsRedigeesFiltrees.length) {
+    if (index + 1 < sessionQuestions.length) {
       setIndex((i) => i + 1);
       setReponse("");
       setVerifie(false);
@@ -5999,7 +6012,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
 
           {mode === "redaction" && !started && (
             <Card C={C} className="p-6 max-w-xl">
-              <div className="font-bold mb-2" style={{ color: C.ink }}>Questions rédigées — {questionsRedigeesFiltrees.length} questions</div>
+              <div className="font-bold mb-2" style={{ color: C.ink }}>Questions rédigées — {Math.min(TAILLE_SESSION_EXAMEN, questionsRedigeesFiltrees.length)} questions</div>
               <div className="text-sm mb-4" style={{ color: C.slate }}>
                 Pas de choix multiple : tu écris ta réponse toi-même, puis tu la compares à la correction pour t'auto-évaluer.
               </div>
@@ -6017,7 +6030,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
               </button>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.gold }}>{question.matiere}</span>
-                <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {questionsRedigeesFiltrees.length}</span>
+                <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {sessionQuestions.length}</span>
               </div>
               <div className="font-bold text-lg mb-4" style={{ color: C.ink }}>{question.question}</div>
 
@@ -6073,7 +6086,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
             <Card C={C} className="p-6 max-w-xl text-center">
               <div className="font-bold text-lg mb-2" style={{ color: C.ink }}>Session terminée</div>
               <div className="text-sm mb-5" style={{ color: C.slate }}>
-                {bilan.bien} bonne(s) réponse(s) sur {questionsRedigeesFiltrees.length}, {bilan.revoir} à revoir.
+                {bilan.bien} bonne(s) réponse(s) sur {sessionQuestions.length}, {bilan.revoir} à revoir.
               </div>
               <button onClick={demarrer} className="px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2 mx-auto" style={{ background: C.navy, color: "#fff" }}>
                 <RotateCcw size={14} /> Recommencer
@@ -6095,14 +6108,16 @@ function QCMExamen({ C, questions, onActifChange }) {
   const [valide, setValide] = useState(false);
   const [score, setScore] = useState(0);
   const [termine, setTermine] = useState(false);
+  const [sessionQuestions, setSessionQuestions] = useState([]);
 
   useEffect(() => {
     if (onActifChange) onActifChange(started && !termine);
   }, [started, termine]);
 
-  const question = questions[index];
+  const question = sessionQuestions[index];
 
   const demarrer = () => {
+    setSessionQuestions(tirerSessionExamen(questions));
     setStarted(true);
     setIndex(0);
     setSelection(null);
@@ -6123,7 +6138,7 @@ function QCMExamen({ C, questions, onActifChange }) {
   };
 
   const suivant = () => {
-    if (index + 1 < questions.length) {
+    if (index + 1 < sessionQuestions.length) {
       setIndex((i) => i + 1);
       setSelection(null);
       setValide(false);
@@ -6135,7 +6150,7 @@ function QCMExamen({ C, questions, onActifChange }) {
   if (!started) {
     return (
       <Card C={C} className="p-6 max-w-xl">
-        <div className="font-bold mb-2" style={{ color: C.ink }}>QCM — {questions.length} questions</div>
+        <div className="font-bold mb-2" style={{ color: C.ink }}>QCM — {Math.min(TAILLE_SESSION_EXAMEN, questions.length)} questions</div>
         <div className="text-sm mb-4" style={{ color: C.slate }}>
           Selon les cours sélectionnés ci-dessus, sans chrono. Sélectionne une réponse puis valide-la pour éviter les clics involontaires.
         </div>
@@ -6152,7 +6167,7 @@ function QCMExamen({ C, questions, onActifChange }) {
       <Card C={C} className="p-6 max-w-xl text-center">
         <div className="font-bold text-lg mb-2" style={{ color: C.ink }}>Session terminée</div>
         <div className="text-sm mb-5" style={{ color: C.slate }}>
-          {score} bonne(s) réponse(s) sur {questions.length}.
+          {score} bonne(s) réponse(s) sur {sessionQuestions.length}.
         </div>
         <button onClick={demarrer} className="px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2 mx-auto" style={{ background: C.navy, color: "#fff" }}>
           <RotateCcw size={14} /> Recommencer
@@ -6176,7 +6191,7 @@ function QCMExamen({ C, questions, onActifChange }) {
 
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.gold }}>{question.matiere}</span>
-        <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {questions.length}</span>
+        <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {sessionQuestions.length}</span>
       </div>
 
       <div className="font-bold text-lg mb-4" style={{ color: C.ink }}>{question.question}</div>
@@ -6218,7 +6233,7 @@ function QCMExamen({ C, questions, onActifChange }) {
         </button>
       ) : (
         <button onClick={suivant} className="px-4 py-2 rounded-md text-sm font-semibold" style={{ background: C.navy, color: "#fff" }}>
-          {index + 1 < questions.length ? "Question suivante →" : "Voir le résultat"}
+          {index + 1 < sessionQuestions.length ? "Question suivante →" : "Voir le résultat"}
         </button>
       )}
     </Card>
@@ -6232,13 +6247,14 @@ function ModeAudio({ C, questions, onActifChange }) {
   const [bilan, setBilan] = useState({ bien: 0, revoir: 0 });
   const [termine, setTermine] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [sessionQuestions, setSessionQuestions] = useState([]);
   const supported = typeof window !== "undefined" && "speechSynthesis" in window;
 
   useEffect(() => {
     if (onActifChange) onActifChange(started && !termine);
   }, [started, termine]);
 
-  const question = questions[index];
+  const question = sessionQuestions[index];
 
   const parler = (texte) => {
     if (!supported) return;
@@ -6256,12 +6272,14 @@ function ModeAudio({ C, questions, onActifChange }) {
   };
 
   const demarrer = () => {
+    const tirage = tirerSessionExamen(questions);
+    setSessionQuestions(tirage);
     setStarted(true);
     setIndex(0);
     setReponseVisible(false);
     setBilan({ bien: 0, revoir: 0 });
     setTermine(false);
-    setTimeout(() => parler(questions[0].question), 300);
+    setTimeout(() => parler(tirage[0].question), 300);
   };
 
   const rejouerQuestion = () => parler(question.question);
@@ -6272,11 +6290,11 @@ function ModeAudio({ C, questions, onActifChange }) {
 
   const noter = (ok) => {
     setBilan((b) => ({ ...b, [ok ? "bien" : "revoir"]: b[ok ? "bien" : "revoir"] + 1 }));
-    if (index + 1 < questions.length) {
+    if (index + 1 < sessionQuestions.length) {
       const next = index + 1;
       setIndex(next);
       setReponseVisible(false);
-      setTimeout(() => parler(questions[next].question), 300);
+      setTimeout(() => parler(sessionQuestions[next].question), 300);
     } else {
       window.speechSynthesis?.cancel();
       setTermine(true);
@@ -6297,7 +6315,7 @@ function ModeAudio({ C, questions, onActifChange }) {
   if (!started) {
     return (
       <Card C={C} className="p-6 max-w-xl">
-        <div className="font-bold mb-2" style={{ color: C.ink }}>Mode audio — {questions.length} questions</div>
+        <div className="font-bold mb-2" style={{ color: C.ink }}>Mode audio — {Math.min(TAILLE_SESSION_EXAMEN, questions.length)} questions</div>
         <div className="text-sm mb-2" style={{ color: C.slate }}>
           La question est lue à voix haute. Réponds à voix haute toi-même, puis écoute la correction pour t'auto-évaluer. Idéal en train ou en tant que passager en voiture.
         </div>
@@ -6317,7 +6335,7 @@ function ModeAudio({ C, questions, onActifChange }) {
       <Card C={C} className="p-6 max-w-xl text-center">
         <div className="font-bold text-lg mb-2" style={{ color: C.ink }}>Session terminée</div>
         <div className="text-sm mb-5" style={{ color: C.slate }}>
-          {bilan.bien} bonne(s) réponse(s) sur {questions.length}, {bilan.revoir} à revoir.
+          {bilan.bien} bonne(s) réponse(s) sur {sessionQuestions.length}, {bilan.revoir} à revoir.
         </div>
         <button onClick={demarrer} className="px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2 mx-auto" style={{ background: C.navy, color: "#fff" }}>
           <RotateCcw size={14} /> Recommencer
@@ -6337,7 +6355,7 @@ function ModeAudio({ C, questions, onActifChange }) {
       </button>
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.gold }}>{question.matiere}</span>
-        <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {questions.length}</span>
+        <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {sessionQuestions.length}</span>
       </div>
 
       <div className="flex flex-col items-center text-center py-6">
