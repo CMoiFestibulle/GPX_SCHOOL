@@ -23,6 +23,7 @@ import {
   X,
   Calendar,
   MessageCircle,
+  Search,
 } from "lucide-react";
 
 /* ----------------------------- THEME ----------------------------- */
@@ -5247,6 +5248,35 @@ function Login({ C, onEnter }) {
   );
 }
 
+/* ----------------------------- SEARCH INPUT ----------------------------- */
+
+function SearchInput({ C, value, onChange, placeholder }) {
+  return (
+    <div className="relative w-full">
+      <Search
+        size={17}
+        strokeWidth={2}
+        className="absolute top-1/2 -translate-y-1/2 pointer-events-none"
+        style={{ left: 14, color: C.slate }}
+      />
+      <input
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full rounded-md outline-none"
+        style={{
+          border: `1px solid ${C.line}`,
+          background: C.card,
+          color: C.ink,
+          fontSize: 16,
+          lineHeight: "1.4",
+          padding: "11px 14px 11px 40px",
+        }}
+      />
+    </div>
+  );
+}
+
 /* ----------------------------- TABS ----------------------------- */
 
 function Dashboard({ C, student, onNaviguerVersFiche }) {
@@ -5262,12 +5292,11 @@ function Dashboard({ C, student, onNaviguerVersFiche }) {
       <SectionTitle C={C}>Tableau de service</SectionTitle>
 
       <div className="max-w-2xl mb-6">
-        <input
+        <SearchInput
+          C={C}
           value={recherche}
           onChange={(e) => setRecherche(e.target.value)}
           placeholder="Rechercher dans toutes les fiches (les 7 documents)…"
-          className="w-full px-3 py-2.5 rounded-md text-sm outline-none"
-          style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
         />
         {recherche.trim() && (
           <div className="mt-3 flex flex-col gap-2">
@@ -5324,13 +5353,9 @@ function MesCours({ C, student, onOuvrirMatiere }) {
     <div>
       <Eyebrow C={C}>Classeur théorique</Eyebrow>
       <SectionTitle C={C}>Mes cours</SectionTitle>
-      <input
-        value={recherche}
-        onChange={(e) => setRecherche(e.target.value)}
-        placeholder="Rechercher une matière…"
-        className="w-full max-w-2xl mb-4 px-3 py-2.5 rounded-md text-sm outline-none"
-        style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
-      />
+      <div className="max-w-2xl mb-4">
+        <SearchInput C={C} value={recherche} onChange={(e) => setRecherche(e.target.value)} placeholder="Rechercher une matière…" />
+      </div>
       <div className="flex flex-col gap-3">
         {matieresFiltrees.length === 0 ? (
           <div className="text-sm" style={{ color: C.slate }}>Aucune matière ne correspond à cette recherche.</div>
@@ -5557,13 +5582,9 @@ function DocumentDPGDPS({ C, cibleFiche, onCibleConsommee }) {
         <Eyebrow C={C}>Fiches synthèse — classeur par document</Eyebrow>
         <SectionTitle C={C}>Choisis un document</SectionTitle>
 
-        <input
-          value={rechercheDoc}
-          onChange={(e) => setRechercheDoc(e.target.value)}
-          placeholder="Rechercher une fiche dans les 7 documents…"
-          className="w-full max-w-2xl mb-4 px-3 py-2.5 rounded-md text-sm outline-none"
-          style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
-        />
+        <div className="max-w-2xl mb-4">
+          <SearchInput C={C} value={rechercheDoc} onChange={(e) => setRechercheDoc(e.target.value)} placeholder="Rechercher une fiche dans les 7 documents…" />
+        </div>
 
         {rechercheDoc.trim() ? (
           <div className="flex flex-col gap-2 max-w-2xl">
@@ -5677,13 +5698,9 @@ function ArticlesLoi({ C }) {
       <Eyebrow C={C}>{ARTICLES_LOI.length} articles — classés par code</Eyebrow>
       <SectionTitle C={C}>Articles de loi</SectionTitle>
 
-      <input
-        value={recherche}
-        onChange={(e) => setRecherche(e.target.value)}
-        placeholder="Rechercher un article, un mot-clé…"
-        className="w-full max-w-2xl mb-4 px-3 py-2.5 rounded-md text-sm outline-none"
-        style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
-      />
+      <div className="max-w-2xl mb-4">
+        <SearchInput C={C} value={recherche} onChange={(e) => setRecherche(e.target.value)} placeholder="Rechercher un article, un mot-clé…" />
+      </div>
 
       <div className="flex flex-wrap gap-2 mb-6">
         <button onClick={() => setFiltre("Tous")} className="text-xs px-3 py-1.5 rounded-full font-semibold"
@@ -6347,13 +6364,9 @@ function ExemplePV({ C }) {
         <div className="text-sm mb-5 px-4 py-3 rounded-md max-w-2xl" style={{ background: `${C.gold}12`, color: C.slate, border: `1px solid ${C.line}` }}>
           Le texte intégral d'un procès-verbal type, tel qu'il apparaît dans le recueil officiel — en-tête réglementaire, numérotation en marge, formules imposées. Idéal pour visualiser la forme finale avant de s'entraîner dans "Entraînement PV".
         </div>
-        <input
-          value={recherche}
-          onChange={(e) => setRecherche(e.target.value)}
-          placeholder="Rechercher un type de PV…"
-          className="w-full max-w-2xl mb-4 px-3 py-2.5 rounded-md text-sm outline-none"
-          style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
-        />
+        <div className="max-w-2xl mb-4">
+          <SearchInput C={C} value={recherche} onChange={(e) => setRecherche(e.target.value)} placeholder="Rechercher un type de PV…" />
+        </div>
         {exemplesFiltres.length === 0 ? (
           <div className="text-sm" style={{ color: C.slate }}>Aucun type de PV ne correspond à cette recherche.</div>
         ) : (
@@ -6516,13 +6529,9 @@ function EntrainementPV({ C }) {
         <div className="text-sm mb-5 px-4 py-3 rounded-md max-w-2xl" style={{ background: `${C.gold}12`, color: C.slate, border: `1px solid ${C.line}` }}>
           Chaque type d'acte a sa propre structure exacte, extraite du recueil officiel de procès-verbaux — les PV sont des documents hyper-formalisés, chaque étape compte.
         </div>
-        <input
-          value={rechercheTheme}
-          onChange={(e) => setRechercheTheme(e.target.value)}
-          placeholder="Rechercher un type de PV…"
-          className="w-full max-w-2xl mb-4 px-3 py-2.5 rounded-md text-sm outline-none"
-          style={{ border: `1px solid ${C.line}`, background: C.card, color: C.ink }}
-        />
+        <div className="max-w-2xl mb-4">
+          <SearchInput C={C} value={rechercheTheme} onChange={(e) => setRechercheTheme(e.target.value)} placeholder="Rechercher un type de PV…" />
+        </div>
         {themesFiltres.length === 0 ? (
           <div className="text-sm" style={{ color: C.slate }}>Aucun type de PV ne correspond à cette recherche.</div>
         ) : (
