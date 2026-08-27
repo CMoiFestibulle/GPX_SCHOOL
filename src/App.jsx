@@ -63,7 +63,6 @@ const NAV_SECTIONS = [
     label: "Révision",
     items: [
       { id: "dashboard", label: "Tableau de service", icon: LayoutGrid },
-      { id: "cours", label: "Mes cours", icon: BookOpen },
       { id: "fiches", label: "Fiches synthèse", icon: FileText },
       { id: "articles", label: "Articles de loi", icon: Scale },
     ],
@@ -5428,41 +5427,6 @@ function Dashboard({ C, student, onNaviguerVersFiche }) {
   );
 }
 
-function MesCours({ C, student, onOuvrirMatiere }) {
-  const [recherche, setRecherche] = useState("");
-  const matieresFiltrees = MATIERES.filter((m) => normaliserTexte(m.nom).includes(normaliserTexte(recherche.trim())));
-
-  return (
-    <div>
-      <Eyebrow C={C}>Classeur théorique</Eyebrow>
-      <SectionTitle C={C}>Mes cours</SectionTitle>
-      <div className="max-w-2xl mb-4">
-        <SearchInput C={C} value={recherche} onChange={(e) => setRecherche(e.target.value)} placeholder="Rechercher une matière…" />
-      </div>
-      <div className="flex flex-col gap-3">
-        {matieresFiltrees.length === 0 ? (
-          <div className="text-sm" style={{ color: C.slate }}>Aucune matière ne correspond à cette recherche.</div>
-        ) : (
-          matieresFiltrees.map((m) => {
-            const av = avancementDe(m.nom, student.acquis);
-            return (
-              <Card C={C} key={m.nom} onClick={() => onOuvrirMatiere(m.nom)} className="p-4 flex items-center gap-4 cursor-pointer">
-                <div className="w-1.5 self-stretch rounded-full" style={{ background: colorFor(C, m.couleur) }} />
-                <div className="flex-1">
-                  <div className="font-semibold" style={{ color: C.ink }}>{m.nom}</div>
-                  <div className="text-xs mt-0.5" style={{ color: C.slate }}>{m.fiches} fiches disponibles</div>
-                  <div className="mt-2"><ProgressBar C={C} value={av} color={colorFor(C, m.couleur)} /></div>
-                </div>
-                <ChevronRight size={18} style={{ color: C.slate }} />
-              </Card>
-            );
-          })
-        )}
-      </div>
-    </div>
-  );
-}
-
 function renderEmphasis(text, accent) {
   if (!text) return null;
   const parts = String(text).split(/(\*\*[^*]+\*\*)/g);
@@ -7497,10 +7461,6 @@ export default function App() {
     setTab("dashboard");
   };
 
-  const ouvrirMatiere = () => {
-    changerOngletProtege("fiches");
-  };
-
   const naviguerVersFiche = (docTitre, sectionNumero, ficheIndex) => {
     if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Changer d'onglet abandonnera ta progression actuelle. Continuer ?")) {
       return;
@@ -7603,7 +7563,6 @@ export default function App() {
       <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-auto">
         <div className="w-full max-w-6xl mx-auto">
           {safeTab === "dashboard" && <Dashboard C={C} student={student} onNaviguerVersFiche={naviguerVersFiche} />}
-          {safeTab === "cours" && <MesCours C={C} student={student} onOuvrirMatiere={ouvrirMatiere} />}
           {safeTab === "fiches" && <DocumentDPGDPS C={C} student={student} cibleFiche={cibleFiche} onCibleConsommee={() => setCibleFiche(null)} />}
           {safeTab === "articles" && <ArticlesLoi C={C} student={student} />}
           {safeTab === "examens" && <ExamensBlancs C={C} student={student} onExamEnCoursChange={(v) => { examEnCoursRef.current = v; }} />}
