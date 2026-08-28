@@ -4050,6 +4050,81 @@ const QCM_QUESTIONS = [
     correct: 1,
     explication: "Lors d'un simple contrôle routier, sans cadre juridique particulier (réquisitions du procureur, flagrance, consentement écrit), la fouille du coffre du véhicule n'est pas autorisée.",
   },
+
+  /* -------- Questions à choix multiples (plusieurs bonnes réponses) -------- */
+  {
+    matiere: "Droit pénal général",
+    question: "Parmi les propositions suivantes, lesquelles font partie des 3 éléments constitutifs d'une infraction ?",
+    options: ["Élément légal", "Élément matériel", "Élément moral", "Élément territorial", "Élément temporel"],
+    correct: [0, 1, 2],
+    explication: "Une infraction suppose un élément légal (un texte qui l'incrimine), un élément matériel (un acte ou une omission) et un élément moral (l'intention ou la faute). Les notions de territoire ou de temps ne sont pas des éléments constitutifs.",
+  },
+  {
+    matiere: "Droit pénal général",
+    question: "Concernant la légitime défense des personnes (art. 122-5 C.P.), quelles conditions doit remplir la riposte ?",
+    options: ["Nécessaire (aucun autre moyen de se soustraire au danger)", "Simultanée (immédiate par rapport à l'atteinte)", "Proportionnée à la gravité de l'atteinte", "Anticipée, pour prévenir un danger futur", "Autorisée au préalable par un magistrat"],
+    correct: [0, 1, 2],
+    explication: "La riposte en légitime défense doit être nécessaire, simultanée (ni anticipée, ni tardive comme une vengeance) et proportionnée à la gravité de l'atteinte — trois conditions cumulatives posées par l'art. 122-5 C.P.",
+  },
+  {
+    matiere: "Technique & sécurité en intervention",
+    question: "Le triangle de sécurité, lors d'une intervention à plusieurs, repose sur quels rôles ?",
+    options: ["Un couvrant", "Un intervenant", "Un périmètre maîtrisé", "Un négociateur", "Un porte-parole"],
+    correct: [0, 1, 2],
+    explication: "Le triangle de sécurité répartit les rôles entre un couvrant (qui surveille et protège), un intervenant (qui agit directement) et un périmètre maîtrisé, pour sécuriser l'ensemble de la zone d'action.",
+  },
+  {
+    matiere: "Technique & sécurité en intervention",
+    question: "Quelles sont les 3 conditions préalables à l'usage d'une arme par un policier (art. L.435-1 C.S.I.) ?",
+    options: ["Agir dans l'exercice de ses fonctions", "Être revêtu de son uniforme ou d'insignes extérieurs apparents", "Agir en cas d'absolue nécessité et de manière strictement proportionnée", "Avoir reçu l'autorisation préalable écrite du procureur", "Être accompagné d'au moins un collègue habilité"],
+    correct: [0, 1, 2],
+    explication: "Avant même d'examiner les 5 situations prévues par le C.S.I., le policier doit remplir 3 conditions préalables : agir dans l'exercice de ses fonctions, être en tenue ou porter des insignes apparents, et n'utiliser son arme qu'en cas d'absolue nécessité et de façon strictement proportionnée.",
+  },
+  {
+    matiere: "Technique & sécurité en intervention",
+    question: "Parmi ces situations, lesquelles empêchent la mise en œuvre de l'amende forfaitaire délictuelle (A.F.D.) pour usage de stupéfiants ?",
+    options: ["Le mis en cause est mineur", "Le mis en cause conduit un véhicule", "Le mis en cause reconnaît spontanément les faits", "La quantité découverte est inférieure à 50 g de cannabis"],
+    correct: [0, 1],
+    explication: "L'A.F.D. stupéfiants ne peut pas être mise en œuvre si le mis en cause est mineur, ou s'il conduisait un véhicule (délit distinct prévu par le code de la route). Reconnaître les faits ou détenir une petite quantité ne fait pas obstacle à l'A.F.D. — c'est au contraire l'un des cas où elle s'applique.",
+  },
+  {
+    matiere: "Technique & sécurité en intervention",
+    question: "Face à une agression en cours ou un individu dangereux, quelles sont les premières mesures attendues d'un primo-intervenant ?",
+    options: [
+      "Écarter toute personne de la zone dangereuse",
+      "Recueillir les premiers renseignements utiles (nombre d'auteurs, personnalité...)",
+      "S'organiser selon l'arrivée progressive des renforts",
+      "Garder son sang-froid",
+      "Ne jamais intervenir « à chaud » et physiquement seul",
+      "Informer immédiatement le C.I.C. dès les premières informations obtenues",
+      "Intervenir immédiatement pour neutraliser seul l'individu, sans attendre de renfort",
+      "Négocier personnellement une contrepartie avec l'auteur",
+    ],
+    correct: [0, 1, 2, 3, 4, 5],
+    explication: "Un primo-intervenant écarte les personnes présentes, recueille du renseignement, s'organise avec les renforts qui arrivent progressivement, garde son sang-froid, informe le C.I.C. sans délai — et ne s'engage jamais seul « à chaud » : l'interpellation immédiate est réservée aux services spécialisés (RAID...).",
+  },
+  {
+    matiere: "Secourisme (SST)",
+    question: "La méthode « P.A.S. » en secourisme se décompose en quelles étapes ?",
+    options: ["Protéger", "Alerter", "Secourir", "Immobiliser", "Réanimer"],
+    correct: [0, 1, 2],
+    explication: "P.A.S. résume la conduite à tenir : Protéger (écarter le sur-accident, ne jamais se mettre en danger), Alerter (15/18/112, message clair), puis Secourir (gestes adaptés à l'état de la victime).",
+  },
+  {
+    matiere: "Circulation & sécurité routière",
+    question: "Parmi ces documents et équipements, lesquels un conducteur doit-il pouvoir présenter lors d'un contrôle routier ?",
+    options: [
+      "Le permis de conduire (ou titre équivalent)",
+      "Le certificat d'immatriculation du véhicule",
+      "L'attestation d'assurance",
+      "Le triangle de présignalisation",
+      "Le gilet de haute visibilité",
+      "La carte grise du véhicule précédemment possédé",
+      "Le carnet d'entretien du véhicule",
+    ],
+    correct: [0, 1, 2, 3, 4],
+    explication: "Les pièces contrôlables lors d'un contrôle routier incluent le titre de conduite, le certificat d'immatriculation, l'attestation d'assurance, ainsi que le triangle de présignalisation et le gilet de haute visibilité (art. R.416-19 C.R.). Le carnet d'entretien ou un ancien certificat d'immatriculation ne sont pas concernés.",
+  },
 ];
 
 const ARTICLES_LOI = [
@@ -6117,7 +6192,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
 function QCMExamen({ C, questions, onActifChange }) {
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
-  const [selection, setSelection] = useState(null);
+  const [selection, setSelection] = useState([]);
   const [valide, setValide] = useState(false);
   const [score, setScore] = useState(0);
   const [termine, setTermine] = useState(false);
@@ -6128,12 +6203,14 @@ function QCMExamen({ C, questions, onActifChange }) {
   }, [started, termine]);
 
   const question = sessionQuestions[index];
+  const estMultiple = question ? Array.isArray(question.correct) : false;
+  const reponsesCorrectes = question ? (estMultiple ? question.correct : [question.correct]) : [];
 
   const demarrer = () => {
     setSessionQuestions(tirerSessionExamen(questions));
     setStarted(true);
     setIndex(0);
-    setSelection(null);
+    setSelection([]);
     setValide(false);
     setScore(0);
     setTermine(false);
@@ -6141,19 +6218,26 @@ function QCMExamen({ C, questions, onActifChange }) {
 
   const choisir = (i) => {
     if (valide) return;
-    setSelection(i);
+    if (estMultiple) {
+      setSelection((s) => (s.includes(i) ? s.filter((x) => x !== i) : [...s, i]));
+    } else {
+      setSelection([i]);
+    }
   };
 
   const valider = () => {
-    if (selection === null || valide) return;
+    if (selection.length === 0 || valide) return;
     setValide(true);
-    if (selection === question.correct) setScore((s) => s + 1);
+    const estCorrecte =
+      selection.length === reponsesCorrectes.length &&
+      selection.every((s) => reponsesCorrectes.includes(s));
+    if (estCorrecte) setScore((s) => s + 1);
   };
 
   const suivant = () => {
     if (index + 1 < sessionQuestions.length) {
       setIndex((i) => i + 1);
-      setSelection(null);
+      setSelection([]);
       setValide(false);
     } else {
       setTermine(true);
@@ -6207,12 +6291,17 @@ function QCMExamen({ C, questions, onActifChange }) {
         <span className="text-xs" style={{ color: C.slate }}>{index + 1} / {sessionQuestions.length}</span>
       </div>
 
-      <div className="font-bold text-lg mb-4" style={{ color: C.ink }}>{question.question}</div>
+      <div className="font-bold text-lg mb-2" style={{ color: C.ink }}>{question.question}</div>
+      {estMultiple && (
+        <div className="text-xs font-semibold mb-3" style={{ color: C.gold }}>
+          Plusieurs réponses sont possibles ({reponsesCorrectes.length} attendues).
+        </div>
+      )}
 
       <div className="flex flex-col gap-2 mb-4">
         {question.options.map((opt, i) => {
-          const estCorrecte = i === question.correct;
-          const estSelectionnee = i === selection;
+          const estCorrecte = reponsesCorrectes.includes(i);
+          const estSelectionnee = selection.includes(i);
           let bg = "transparent";
           let border = C.line;
           if (valide) {
@@ -6226,9 +6315,17 @@ function QCMExamen({ C, questions, onActifChange }) {
             <button
               key={i}
               onClick={() => choisir(i)}
-              className="text-left px-4 py-3 rounded-md text-sm"
+              className="text-left px-4 py-3 rounded-md text-sm flex items-center gap-3"
               style={{ border: `1px solid ${border}`, background: bg, color: C.ink, cursor: valide ? "default" : "pointer" }}
             >
+              {estMultiple && (
+                <span
+                  className="flex-shrink-0 w-4 h-4 rounded flex items-center justify-center"
+                  style={{ border: `1.5px solid ${estSelectionnee || (valide && estCorrecte) ? (valide ? (estCorrecte ? C.green : C.red) : C.navy) : C.slate}`, background: estSelectionnee ? (valide ? (estCorrecte ? C.green : C.red) : C.navy) : "transparent" }}
+                >
+                  {estSelectionnee && <Check size={11} color="#fff" />}
+                </span>
+              )}
               {opt}
             </button>
           );
@@ -6245,9 +6342,9 @@ function QCMExamen({ C, questions, onActifChange }) {
       {!valide ? (
         <button
           onClick={valider}
-          disabled={selection === null}
+          disabled={selection.length === 0}
           className="px-4 py-2 rounded-md text-sm font-semibold"
-          style={{ background: selection === null ? C.line : C.navy, color: selection === null ? C.slate : "#fff" }}
+          style={{ background: selection.length === 0 ? C.line : C.navy, color: selection.length === 0 ? C.slate : "#fff" }}
         >
           Valider ma réponse
         </button>
