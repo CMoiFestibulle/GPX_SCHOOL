@@ -14,6 +14,9 @@ import {
   Sun,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
+  ChevronUp,
+  SlidersHorizontal,
   Check,
   Users,
   LogOut,
@@ -5996,7 +5999,7 @@ function ExamensBlancs({ C, onExamEnCoursChange, onDemanderConfirmation }) {
   const [bilan, setBilan] = useState({ bien: 0, revoir: 0 });
   const [termine, setTermine] = useState(false);
   const [matieresSelectionnees, setMatieresSelectionnees] = useState(MATIERES.map((m) => m.nom));
-  const [selecteurOuvert, setSelecteurOuvert] = useState(false);
+  const [selecteurOuvert, setSelecteurOuvert] = useState(true);
   const [qcmActif, setQcmActif] = useState(false);
   const [audioActif, setAudioActif] = useState(false);
   const [sessionQuestions, setSessionQuestions] = useState([]);
@@ -6089,14 +6092,30 @@ function ExamensBlancs({ C, onExamEnCoursChange, onDemanderConfirmation }) {
   };
 
   const SelecteurCours = (
-    <Card C={C} className="p-4 mb-5 max-w-2xl">
-      <button onClick={() => setSelecteurOuvert((v) => !v)} className="w-full flex items-center justify-between">
-        <span className="text-sm font-bold" style={{ color: C.ink }}>
-          Cours inclus dans l'examen ({matieresSelectionnees.length}/{MATIERES.length}) {selecteurOuvert ? "▲" : "▼"}
+    <Card C={C} className="p-4 mb-5 max-w-2xl" style={{ borderColor: C.gold }}>
+      <button onClick={() => setSelecteurOuvert((v) => !v)} className="w-full flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5 text-left">
+          <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${C.gold}20`, color: C.gold }}>
+            <SlidersHorizontal size={15} />
+          </span>
+          <div>
+            <div className="text-sm font-bold" style={{ color: C.ink }}>
+              Cours inclus dans l'examen
+            </div>
+            <div className="text-xs" style={{ color: C.slate }}>
+              {matieresSelectionnees.length}/{MATIERES.length} matière{matieresSelectionnees.length > 1 ? "s" : ""} sélectionnée{matieresSelectionnees.length > 1 ? "s" : ""} — clique pour {selecteurOuvert ? "réduire" : "choisir"}
+            </div>
+          </div>
+        </div>
+        <span className="flex-shrink-0" style={{ color: C.gold }}>
+          {selecteurOuvert ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </span>
       </button>
       {selecteurOuvert && (
-        <div className="mt-3">
+        <div className="mt-4">
+          <div className="text-xs mb-3" style={{ color: C.slate }}>
+            Décoche les matières que tu ne veux pas réviser dans cette session — le tirage des questions se fera uniquement parmi celles cochées.
+          </div>
           <div className="flex gap-2 mb-3">
             <button onClick={() => changerCoursSelectionnes(() => setMatieresSelectionnees(MATIERES.map((m) => m.nom)))} className="text-xs px-3 py-1.5 rounded-full font-semibold" style={{ border: `1px solid ${C.line}`, color: C.ink }}>
               Tout sélectionner
