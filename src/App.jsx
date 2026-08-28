@@ -5137,6 +5137,50 @@ function BackButton({ C, onClick, label = "Retour" }) {
   );
 }
 
+function ConfirmDialog({ C, data, onClose }) {
+  if (!data) return null;
+  const confirmer = () => {
+    data.onConfirm();
+    onClose();
+  };
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.55)" }}
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm rounded-lg p-6"
+        style={{ background: C.card, border: `1px solid ${C.line}` }}
+      >
+        <div className="flex items-start gap-3 mb-5">
+          <div className="mt-0.5 flex-shrink-0" style={{ color: C.gold }}>
+            <Shield size={18} />
+          </div>
+          <div className="text-sm leading-relaxed" style={{ color: C.ink }}>{data.message}</div>
+        </div>
+        <div className="flex gap-3 justify-end flex-wrap">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-md text-sm font-semibold"
+            style={{ border: `1px solid ${C.line}`, color: C.ink }}
+          >
+            Annuler
+          </button>
+          <button
+            onClick={confirmer}
+            className="px-4 py-2 rounded-md text-sm font-bold"
+            style={{ background: C.red, color: "#fff" }}
+          >
+            {data.confirmLabel || "Continuer"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SectionTitle({ C, children }) {
   return (
     <h1 className="text-2xl font-extrabold uppercase tracking-wide pb-2 mb-6 inline-block" style={{ color: C.ink, borderBottom: `3px solid ${C.gold}` }}>
@@ -5942,7 +5986,7 @@ function tirerSessionExamen(pool, taille = TAILLE_SESSION_EXAMEN) {
   return melange.slice(0, taille);
 }
 
-function ExamensBlancs({ C, onExamEnCoursChange }) {
+function ExamensBlancs({ C, onExamEnCoursChange, onDemanderConfirmation }) {
   const [mode, setMode] = useState("qcm");
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
@@ -6008,28 +6052,40 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
   const uneSessionEstActive = sessionEnCours || qcmActif || audioActif;
 
   const changerMode = (nouveauMode) => {
-    if (uneSessionEstActive && !window.confirm("Une session est en cours dans cet onglet. Changer d'onglet abandonnera ta progression actuelle. Continuer ?")) {
+    if (!uneSessionEstActive) {
+      setMode(nouveauMode);
+      setStarted(false);
       return;
     }
-    setMode(nouveauMode);
-    setStarted(false);
+    onDemanderConfirmation(
+      "Une session est en cours dans cet onglet. Changer d'onglet abandonnera ta progression actuelle. Continuer ?",
+      () => { setMode(nouveauMode); setStarted(false); },
+      "Changer d'onglet"
+    );
   };
 
   const quitterSession = () => {
-    if (sessionEnCours && !window.confirm("Abandonner cette session en cours ? Ta progression sur cette question sera perdue.")) {
+    if (!sessionEnCours) {
+      setStarted(false);
       return;
     }
-    setStarted(false);
+    onDemanderConfirmation(
+      "Abandonner cette session en cours ? Ta progression sur cette question sera perdue.",
+      () => setStarted(false),
+      "Arrêter la session"
+    );
   };
 
   const changerCoursSelectionnes = (action) => {
-    if (uneSessionEstActive) {
-      if (!window.confirm("Changer les cours sélectionnés pendant une session en cours va la réinitialiser. Continuer ?")) {
-        return;
-      }
-      setStarted(false);
+    if (!uneSessionEstActive) {
+      action();
+      return;
     }
-    action();
+    onDemanderConfirmation(
+      "Changer les cours sélectionnés pendant une session en cours va la réinitialiser. Continuer ?",
+      () => { setStarted(false); action(); },
+      "Réinitialiser"
+    );
   };
 
   const SelecteurCours = (
@@ -6096,7 +6152,7 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
         </Card>
       ) : (
         <>
-          {mode === "qcm" && <QCMExamen C={C} questions={qcmFiltre} onActifChange={setQcmActif} />}
+          {mode === "qcm" && <QCMExamen C={C} questions={qcmFiltre} onActifChange={setQcmActif} onDemanderConfirmation={onDemanderConfirmation} />}
 
           {mode === "redaction" && !started && (
             <Card C={C} className="p-6 max-w-xl">
@@ -6113,8 +6169,8 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
 
           {mode === "redaction" && started && !termine && question && (
             <Card C={C} className="p-6 max-w-2xl">
-              <button onClick={quitterSession} className="text-xs font-semibold flex items-center gap-1 mb-4" style={{ color: C.slate }}>
-                <ChevronLeft size={14} /> Retour
+              <button onClick={quitterSession} className="text-xs font-semibold flex items-center gap-1 mb-4" style={{ color: C.red }}>
+                <X size={14} /> Arrêter la session
               </button>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.gold }}>{question.matiere}</span>
@@ -6182,14 +6238,14 @@ function ExamensBlancs({ C, onExamEnCoursChange }) {
             </Card>
           )}
 
-          {mode === "audio" && <ModeAudio C={C} questions={questionsRedigeesFiltrees} onActifChange={setAudioActif} />}
+          {mode === "audio" && <ModeAudio C={C} questions={questionsRedigeesFiltrees} onActifChange={setAudioActif} onDemanderConfirmation={onDemanderConfirmation} />}
         </>
       )}
     </div>
   );
 }
 
-function QCMExamen({ C, questions, onActifChange }) {
+function QCMExamen({ C, questions, onActifChange, onDemanderConfirmation }) {
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [selection, setSelection] = useState([]);
@@ -6274,16 +6330,17 @@ function QCMExamen({ C, questions, onActifChange }) {
   }
 
   const quitterSession = () => {
-    if (!window.confirm("Abandonner cette session QCM en cours ? Ta progression sera perdue.")) {
-      return;
-    }
-    setStarted(false);
+    onDemanderConfirmation(
+      "Abandonner cette session QCM en cours ? Ta progression sera perdue.",
+      () => setStarted(false),
+      "Arrêter la session"
+    );
   };
 
   return (
     <Card C={C} className="p-6 max-w-2xl">
-      <button onClick={quitterSession} className="text-xs font-semibold flex items-center gap-1 mb-4" style={{ color: C.slate }}>
-        <ChevronLeft size={14} /> Retour
+      <button onClick={quitterSession} className="text-xs font-semibold flex items-center gap-1 mb-4" style={{ color: C.red }}>
+        <X size={14} /> Arrêter la session
       </button>
 
       <div className="flex items-center justify-between mb-4">
@@ -6357,7 +6414,7 @@ function QCMExamen({ C, questions, onActifChange }) {
   );
 }
 
-function ModeAudio({ C, questions, onActifChange }) {
+function ModeAudio({ C, questions, onActifChange, onDemanderConfirmation }) {
   const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [reponseVisible, setReponseVisible] = useState(false);
@@ -6464,11 +6521,17 @@ function ModeAudio({ C, questions, onActifChange }) {
   return (
     <Card C={C} className="p-6 max-w-2xl">
       <button
-        onClick={() => { if (!window.confirm("Abandonner cette session audio en cours ? Ta progression sera perdue.")) return; window.speechSynthesis?.cancel(); setStarted(false); }}
+        onClick={() => {
+          onDemanderConfirmation(
+            "Abandonner cette session audio en cours ? Ta progression sera perdue.",
+            () => { window.speechSynthesis?.cancel(); setStarted(false); },
+            "Arrêter la session"
+          );
+        }}
         className="text-xs font-semibold flex items-center gap-1 mb-4"
-        style={{ color: C.slate }}
+        style={{ color: C.red }}
       >
-        <ChevronLeft size={14} /> Retour
+        <X size={14} /> Arrêter la session
       </button>
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-bold uppercase tracking-wide" style={{ color: C.gold }}>{question.matiere}</span>
@@ -7590,14 +7653,24 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [cibleFiche, setCibleFiche] = useState(null);
+  const [confirmModal, setConfirmModal] = useState(null);
   const examEnCoursRef = useRef(false);
   const C = dark ? DARK : LIGHT;
 
+  const demanderConfirmation = (message, onConfirm, confirmLabel) => {
+    setConfirmModal({ message, onConfirm, confirmLabel });
+  };
+
   const changerOngletProtege = (nouvelOnglet) => {
-    if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Changer d'onglet abandonnera ta progression actuelle. Continuer ?")) {
+    if (!examEnCoursRef.current) {
+      setTab(nouvelOnglet);
       return;
     }
-    setTab(nouvelOnglet);
+    demanderConfirmation(
+      "Tu as un examen blanc en cours. Changer d'onglet abandonnera ta progression actuelle. Continuer ?",
+      () => setTab(nouvelOnglet),
+      "Changer d'onglet"
+    );
   };
 
   const persist = async (data) => {
@@ -7615,11 +7688,19 @@ export default function App() {
   };
 
   const naviguerVersFiche = (docTitre, sectionNumero, ficheIndex) => {
-    if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Changer d'onglet abandonnera ta progression actuelle. Continuer ?")) {
+    const aller = () => {
+      setCibleFiche({ docTitre, sectionNumero, ficheIndex });
+      setTab("fiches");
+    };
+    if (!examEnCoursRef.current) {
+      aller();
       return;
     }
-    setCibleFiche({ docTitre, sectionNumero, ficheIndex });
-    setTab("fiches");
+    demanderConfirmation(
+      "Tu as un examen blanc en cours. Changer d'onglet abandonnera ta progression actuelle. Continuer ?",
+      aller,
+      "Changer d'onglet"
+    );
   };
 
   if (!student) {
@@ -7652,7 +7733,14 @@ export default function App() {
         <span className="text-sm font-semibold" style={{ color: "#fff" }}>
           {studentName} {student.isAdmin && <span style={{ color: C.goldSoft }} className="text-xs">(admin)</span>}
         </span>
-        <button onClick={() => { if (examEnCoursRef.current && !window.confirm("Tu as un examen blanc en cours. Te déconnecter abandonnera ta progression actuelle. Continuer ?")) return; definirJetonAuth(null); setStudent(null); setStudentName(null); setTab("dashboard"); }} title="Changer de session">
+        <button
+          onClick={() => {
+            const seDeconnecter = () => { definirJetonAuth(null); setStudent(null); setStudentName(null); setTab("dashboard"); };
+            if (!examEnCoursRef.current) { seDeconnecter(); return; }
+            demanderConfirmation("Tu as un examen blanc en cours. Te déconnecter abandonnera ta progression actuelle. Continuer ?", seDeconnecter, "Se déconnecter");
+          }}
+          title="Changer de session"
+        >
           <LogOut size={14} style={{ color: C.goldSoft }} />
         </button>
       </div>
@@ -7718,7 +7806,7 @@ export default function App() {
           {safeTab === "dashboard" && <Dashboard C={C} student={student} onNaviguerVersFiche={naviguerVersFiche} />}
           {safeTab === "fiches" && <DocumentDPGDPS C={C} student={student} cibleFiche={cibleFiche} onCibleConsommee={() => setCibleFiche(null)} />}
           {safeTab === "articles" && <ArticlesLoi C={C} student={student} />}
-          {safeTab === "examens" && <ExamensBlancs C={C} student={student} onExamEnCoursChange={(v) => { examEnCoursRef.current = v; }} />}
+          {safeTab === "examens" && <ExamensBlancs C={C} student={student} onExamEnCoursChange={(v) => { examEnCoursRef.current = v; }} onDemanderConfirmation={demanderConfirmation} />}
           {safeTab === "pv" && <EntrainementPV C={C} student={student} />}
           {safeTab === "exemple-pv" && <ExemplePV C={C} student={student} />}
           {safeTab === "support" && <SupportTab C={C} student={student} />}
@@ -7734,6 +7822,8 @@ export default function App() {
           La sauvegarde a échoué. Vérifie ta connexion et réessaie.
         </div>
       )}
+
+      <ConfirmDialog C={C} data={confirmModal} onClose={() => setConfirmModal(null)} />
     </div>
   );
 }
