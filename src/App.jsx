@@ -74,7 +74,6 @@ const NAV_SECTIONS = [
     label: "Entraînement",
     items: [
       { id: "examens", label: "Examens blancs", icon: ClipboardList },
-      { id: "controle-identite", label: "Contrôle d'identité", icon: Scale },
       { id: "pv", label: "Entraînement PV", icon: FileText },
       { id: "exemple-pv", label: "Exemple PV", icon: FileText },
     ],
@@ -96,6 +95,7 @@ const MATIERES = [
   { nom: "Technique & sécurité en intervention", couleur: "red", fiches: 13 },
   { nom: "Secourisme (SST)", couleur: "gold", fiches: 11 },
   { nom: "Circulation & sécurité routière", couleur: "navy", fiches: 7 },
+  { nom: "Contrôle d'identité", couleur: "gold", fiches: 0 },
 ];
 
 const DOC_DPG_DPS_AVANCE = {
@@ -5556,6 +5556,253 @@ const QCM_QUESTIONS = [
     correct: 1,
     explication: "Le meurtre commis sur un témoin, une victime ou une partie civile pour l'empêcher de dénoncer les faits ou de déposer, ou en raison de sa déposition, constitue un meurtre aggravé (art. 221-4 C.P.), puni de la réclusion criminelle à perpétuité.",
   },
+
+  /* -------- Contrôle d'identité (art. 78-1 à 78-3 C.P.P.) -------- */
+{
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité se définit comme :",
+    options: ["Une arrestation temporaire pour vérification", "L'invitation faite à une personne de justifier immédiatement de son identité", "Une fouille corporelle systématique", "Une mesure réservée aux personnes majeures"],
+    correct: 1,
+    explication: "Le contrôle d'identité est l'invitation faite à une personne de justifier immédiatement de son identité.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "En vertu de l'art. 78-1 C.P.P., qui est tenu de se soumettre à un contrôle d'identité ?",
+    options: ["Uniquement les personnes majeures", "Toute personne se trouvant sur le territoire national", "Uniquement les personnes de nationalité française", "Uniquement les personnes véhiculées"],
+    correct: 1,
+    explication: "L'art. 78-1 C.P.P. prévoit que toute personne se trouvant sur le territoire national est tenue de se soumettre au contrôle de son identité.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Parmi ces autorités, laquelle n'est pas habilitée à réaliser un contrôle d'identité, même sous conditions ?",
+    options: ["Un O.P.J.", "Un A.P.J.", "Un réserviste de la police ou de la gendarmerie nationale", "Un agent de sécurité privée"],
+    correct: 3,
+    explication: "Les O.P.J., les A.P.J. (et certains A.P.J.A. sous conditions), ainsi que les réservistes de la police et de la gendarmerie nationale peuvent être habilités — pas les agents de sécurité privée.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Hors des cas spécifiques prévus par les art. 78-2-2 et 78-2-4 C.P.P., que peut faire un A.P.J.A. en matière de contrôle d'identité ?",
+    options: ["Un contrôle d'identité complet, comme un O.P.J.", "Seulement relever l'identité, en cas de contravention", "Aucun acte, sous aucun prétexte", "Une fouille intégrale"],
+    correct: 1,
+    explication: "Hors ces cas particuliers, un A.P.J.A. ne peut que relever l'identité d'une personne, en cas de contravention.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Parmi ces moyens, lequel n'est pas un moyen de preuve d'identité reconnu ?",
+    options: ["Des documents officiels probants", "D'autres documents", "Le recours à des témoignages", "Une simple déclaration verbale non corroborée"],
+    correct: 3,
+    explication: "Les moyens reconnus sont les documents officiels probants, d'autres documents, et le recours à des témoignages — une simple déclaration verbale non appuyée ne suffit pas.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité judiciaire à l'initiative des policiers (art. 78-2 al.2 C.P.P.) peut être réalisé lorsque la personne est soupçonnée de :",
+    options: ["Avoir un comportement suspect sans autre précision", "Avoir commis ou tenté de commettre une infraction", "Être simplement présente sur les lieux d'une infraction", "Ne pas porter de pièce d'identité sur elle"],
+    correct: 1,
+    explication: "L'art. 78-2 al.2 C.P.P. permet le contrôle d'une personne soupçonnée d'avoir commis ou tenté de commettre une infraction.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Selon l'art. 78-2 al.3 C.P.P., un contrôle d'identité peut être réalisé si la personne est soupçonnée de :",
+    options: ["Se préparer à commettre un crime ou un délit", "Avoir déjà été condamnée par le passé", "Résider dans un quartier sensible", "Avoir un casier judiciaire"],
+    correct: 0,
+    explication: "L'art. 78-2 al.3 C.P.P. permet le contrôle d'une personne soupçonnée de se préparer à commettre un crime ou un délit.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Selon l'art. 78-2 al.4 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
+    options: ["Est mineure", "Est susceptible de fournir des renseignements utiles à l'enquête", "Porte un sac à dos", "Se trouve seule dans la rue"],
+    correct: 1,
+    explication: "L'art. 78-2 al.4 C.P.P. permet le contrôle d'une personne susceptible de fournir des renseignements utiles à l'enquête en cours.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Selon l'art. 78-2 al.5 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
+    options: ["A violé des obligations ou interdictions auxquelles elle est soumise", "Est en état d'ébriété", "Refuse de répondre à une question anodine", "Porte une tenue inhabituelle"],
+    correct: 0,
+    explication: "L'art. 78-2 al.5 C.P.P. permet le contrôle d'une personne ayant violé des obligations ou interdictions auxquelles elle est soumise (contrôle judiciaire, interdiction de paraître...).",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Selon l'art. 78-2 al.6 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
+    options: ["Fait l'objet de recherches judiciaires", "Est simplement inconnue de l'agent", "Refuse de saluer un policier", "A un accent étranger"],
+    correct: 0,
+    explication: "L'art. 78-2 al.6 C.P.P. permet le contrôle d'une personne faisant l'objet de recherches ordonnées par une autorité judiciaire.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Sur réquisitions écrites du procureur de la République (art. 78-2 al.7 C.P.P.), ces réquisitions doivent notamment :",
+    options: ["Rester orales pour plus de rapidité", "Être écrites, préciser les infractions recherchées, déterminer les lieux et la durée", "Être valables sans limite de durée", "Ne viser qu'une seule personne nommément désignée"],
+    correct: 1,
+    explication: "Les réquisitions du procureur doivent être écrites, préciser les infractions recherchées, et déterminer les lieux et la durée du contrôle, qui s'applique alors à toute personne se trouvant dans la zone visée.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité préventif de police administrative (art. 78-2 al.8 C.P.P.) a pour but :",
+    options: ["De rechercher systématiquement un mandat d'arrêt", "De prévenir une atteinte à l'ordre public", "De vérifier le paiement d'une amende", "De constater une infraction déjà commise uniquement"],
+    correct: 1,
+    explication: "Le contrôle préventif de police administrative vise à prévenir une atteinte à l'ordre public, notamment à la sécurité des personnes ou des biens.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité préventif de police administrative doit être motivé par :",
+    options: ["Une simple intuition de l'agent", "Des éléments objectifs, comme une alerte à la bombe ou un attroupement", "Un ordre écrit du maire uniquement", "Aucune motivation n'est requise"],
+    correct: 1,
+    explication: "Ce contrôle doit être motivé par des éléments objectifs déduits de circonstances extérieures à la personne elle-même, comme une alerte à la bombe ou un attroupement.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Dans la zone Schengen, le contrôle d'identité en zone frontalière peut être réalisé jusqu'à quelle distance de la frontière ?",
+    options: ["5 km", "10 km", "20 km", "50 km"],
+    correct: 2,
+    explication: "En zone Schengen, le contrôle d'identité en zone frontalière peut être réalisé jusqu'à 20 km de la frontière.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité en zone frontalière est-il permanent ?",
+    options: ["Oui, sans limite de durée", "Non, il est non permanent, limité à 12h maximum et aléatoire", "Oui, mais seulement la nuit", "Non, il est interdit"],
+    correct: 1,
+    explication: "Ce contrôle n'est pas permanent : il est limité à 12 heures maximum et doit être aléatoire.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Aux abords des gares et aéroports ouverts au trafic international, la zone de contrôle similaire s'étend jusqu'à :",
+    options: ["5 km", "10 km", "20 km", "30 km"],
+    correct: 1,
+    explication: "Une zone de contrôle similaire de 10 km s'applique aux abords des gares et aéroports ouverts au trafic international.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Dans les DOM-TOM, quels territoires peuvent voir leur zone entière désignée pour ce type de contrôle ?",
+    options: ["La Guyane, la Guadeloupe, la Martinique, Mayotte, Saint-Martin et Saint-Barthélemy", "Uniquement la Guyane", "Uniquement les territoires du Pacifique", "Aucun territoire ultramarin n'est concerné"],
+    correct: 0,
+    explication: "En Guyane, à la Guadeloupe, en Martinique, à Mayotte, à Saint-Martin et à Saint-Barthélemy, la zone entière peut être désignée pour ce contrôle.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité en locaux professionnels (art. 78-2-1 C.P.P.) vise notamment à lutter contre :",
+    options: ["Le vol à l'étalage", "Le travail dissimulé", "La fraude fiscale des particuliers", "Le trafic de stupéfiants uniquement"],
+    correct: 1,
+    explication: "Ce contrôle vise notamment à lutter contre le travail dissimulé, sur réquisitions du procureur visant les locaux professionnels et leurs annexes.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité en locaux professionnels, sur réquisitions du procureur, est autorisé pour une durée maximale de :",
+    options: ["15 jours", "1 mois", "3 mois", "6 mois"],
+    correct: 1,
+    explication: "Ce contrôle est autorisé pour une durée maximale d'1 mois, sur réquisitions du procureur visant les locaux professionnels désignés.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Sur réquisitions écrites du procureur (art. 78-2-2 C.P.P.), les A.P.J. et A.P.J.A. peuvent notamment assister les O.P.J. pour :",
+    options: ["Prononcer une amende forfaitaire", "La visite des véhicules, l'inspection visuelle ou la fouille des bagages", "Décider seuls d'une garde à vue", "Rédiger un réquisitoire"],
+    correct: 1,
+    explication: "Sur réquisitions écrites du procureur, pour des infractions comme le terrorisme ou les stupéfiants, les A.P.J. et A.P.J.A. peuvent assister les O.P.J. pour la visite des véhicules et l'inspection ou la fouille des bagages.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "En cas de crime ou de délit flagrant, l'art. 78-2-3 C.P.P. permet aux A.P.J. et A.P.J.A. de :",
+    options: ["Prononcer eux-mêmes une mise en examen", "Assister les O.P.J. à la visite des véhicules", "Décider seuls d'une perquisition", "Placer seuls une personne en garde à vue"],
+    correct: 1,
+    explication: "En cas de crime ou de délit flagrant, les A.P.J. et A.P.J.A. peuvent assister les O.P.J. à la visite des véhicules (art. 78-2-3 C.P.P.).",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Face à une atteinte grave à la sécurité des personnes et des biens (art. 78-2-4 C.P.P.), la visite du véhicule et l'inspection des bagages sont limitées à une durée maximale de :",
+    options: ["15 minutes", "30 minutes", "1 heure", "2 heures"],
+    correct: 1,
+    explication: "Dans ce cadre, sous la responsabilité d'un O.P.J., ces opérations sont limitées à une durée maximale de 30 minutes.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "L'art. 78-2-5 C.P.P. permet la fouille des bagages et la visite des véhicules aux abords d'une manifestation, en vue de rechercher :",
+    options: ["Des documents d'identité falsifiés", "Des armes, sur réquisitions écrites du procureur", "Des produits stupéfiants uniquement", "Des billets de manifestation contrefaits"],
+    correct: 1,
+    explication: "L'art. 78-2-5 C.P.P. autorise, sur réquisitions écrites du procureur, la recherche d'armes aux abords d'une manifestation susceptible de troubles, pour une durée maximale de 24h.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Lors de la visite d'un véhicule dans le cadre d'un contrôle d'identité, le véhicule doit être :",
+    options: ["Détruit si une infraction est découverte", "Immobilisé pendant le temps de la visite, en présence du conducteur ou du propriétaire", "Conduit au commissariat systématiquement", "Fouillé sans présence obligatoire de qui que ce soit"],
+    correct: 1,
+    explication: "Le véhicule est immobilisé pendant le temps de la visite, qui se déroule en présence du conducteur ou du propriétaire.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Dans quel cas un procès-verbal doit-il être rédigé à la suite d'une visite de véhicule ou d'une fouille de bagages ?",
+    options: ["Uniquement si le conducteur en fait la demande", "En cas de découverte d'une infraction, à la demande du conducteur/propriétaire, ou si la visite s'est déroulée en son absence", "Jamais, sauf réquisition ultérieure du procureur", "Uniquement si un objet est saisi"],
+    correct: 1,
+    explication: "Un PV est rédigé en cas de découverte d'une infraction, si le conducteur ou le propriétaire du véhicule/bagage le demande, ou si la visite s'est déroulée en son absence.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Que prévoit l'art. 78-3 C.P.P. en cas de refus ou d'incapacité à justifier son identité lors d'un contrôle ?",
+    options: ["La personne est immédiatement placée en garde à vue", "La personne peut être retenue sur place ou en local de police, pour vérification", "Aucune mesure particulière n'est prévue", "La personne est systématiquement relâchée"],
+    correct: 1,
+    explication: "En cas de refus ou d'incapacité à justifier son identité, la personne peut être retenue sur place ou dans un local de police pour vérification (art. 78-3 C.P.P.).",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Dans le cadre de la vérification d'identité de l'art. 78-3 C.P.P., la retenue est réalisée sous quelle autorité, et pour quelle durée maximale de droit commun ?",
+    options: ["Sous l'autorité d'un A.P.J.A., maximum 2h", "Sous l'autorité d'un O.P.J., maximum 4h", "Sous l'autorité du procureur, maximum 24h", "Sans limite de durée"],
+    correct: 1,
+    explication: "La retenue pour vérification d'identité se fait avec un O.P.J., pour une durée maximale de 4 heures (portée à 8 heures à Mayotte).",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "À Mayotte, la durée maximale de retenue pour vérification d'identité (art. 78-3 C.P.P.) est de :",
+    options: ["4 heures, comme partout ailleurs", "6 heures", "8 heures", "12 heures"],
+    correct: 2,
+    explication: "À Mayotte, la durée maximale de retenue pour vérification d'identité est portée à 8 heures, contre 4 heures dans le reste du territoire.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Lors d'une vérification d'identité (art. 78-3 C.P.P.), quels droits sont notifiés à la personne retenue ?",
+    options: ["Le droit de refuser toute vérification", "Le droit d'aviser le procureur de la vérification dont elle fait l'objet et de prévenir sa famille ou une personne de son choix", "Le droit à un avocat immédiat, comme en garde à vue", "Aucun droit particulier n'est notifié"],
+    correct: 1,
+    explication: "La personne retenue est notifiée de son droit d'aviser le procureur de la vérification dont elle fait l'objet et de prévenir sa famille ou une personne de son choix.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "La « vérification de situation » (retenue liée à une suspicion terroriste) permet de retenir une personne :",
+    options: ["Jusqu'à vérification de son niveau de menace, en présence d'un O.P.J.", "Indéfiniment, sans limite", "Uniquement avec l'accord préalable d'un juge d'instruction", "Seulement si elle est déjà connue des services"],
+    correct: 0,
+    explication: "S'il existe des raisons sérieuses de soupçonner un lien avec des activités à caractère terroriste, la personne peut être retenue jusqu'à vérification de sa situation, en présence d'un O.P.J.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Quelle est la durée maximale de la retenue dans le cadre d'une vérification de situation liée à une suspicion terroriste ?",
+    options: ["2 heures", "4 heures", "6 heures", "12 heures"],
+    correct: 1,
+    explication: "Cette retenue est limitée à 4 heures maximum, en présence d'un officier de police judiciaire.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Dans le cadre d'un contrôle d'identité en locaux professionnels, à qui les réquisitions du procureur doivent-elles s'appliquer ?",
+    options: ["À tout le territoire national", "Aux locaux professionnels désignés et à leurs annexes", "Uniquement aux entrepôts industriels", "Uniquement aux commerces de nuit"],
+    correct: 1,
+    explication: "Les réquisitions du procureur pour ce type de contrôle visent des locaux professionnels précisément désignés, ainsi que leurs annexes.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Concernant l'inspection visuelle des bagages et la fouille dans le cadre d'un contrôle de véhicule, en présence de qui doivent-elles se dérouler ?",
+    options: ["D'un simple témoin quelconque", "Du propriétaire du bagage", "D'un magistrat obligatoirement présent", "D'aucune personne en particulier"],
+    correct: 1,
+    explication: "L'inspection visuelle des bagages et leur fouille se déroulent en présence du propriétaire du bagage, qui ne peut être retenu que pour le temps nécessaire au déroulement des opérations.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Sur quel fondement légal repose la fouille des bagages d'une personne porteuse d'une arme lors d'une manifestation ?",
+    options: ["Art. 78-2-5 C.P.P., sur réquisitions écrites du procureur pour la recherche d'armes", "Art. 63 C.P.P., comme pour une garde à vue classique", "Aucun texte ne prévoit cette situation", "Art. 122-5 C.P., légitime défense"],
+    correct: 0,
+    explication: "L'art. 78-2-5 C.P.P. permet, sur réquisitions écrites du procureur, la fouille des bagages et la visite des véhicules pour la recherche d'armes aux abords d'une manifestation.",
+  },
+  {
+    matiere: "Contrôle d'identité",
+    question: "Le contrôle d'identité de police administrative (78-2 al.8) peut-il porter sur une personne se trouvant dans un lieu ouvert au public ?",
+    options: ["Non, uniquement sur la voie publique", "Oui, il porte sur toute personne en lieu public ou ouvert au public", "Non, uniquement dans les lieux privés", "Oui, mais seulement dans les gares"],
+    correct: 1,
+    explication: "Ce contrôle préventif porte sur toute personne se trouvant dans un lieu public ou ouvert au public (gares, lieux de rassemblement...).",
+  },
 ];
 
 const ARTICLES_LOI = [
@@ -6503,348 +6750,7 @@ const QUESTIONS_REDIGEES = [
   },
 ];
 
-/* -------- Contrôle d'identité : fiche + banque de questions dédiées -------- */
-const FICHE_CONTROLE_IDENTITE = [
-  {
-    titre: "1. Définition",
-    points: [
-      "Invitation faite à une personne de justifier immédiatement de son identité.",
-    ],
-  },
-  {
-    titre: "2. Personnes concernées",
-    points: [
-      "Toute personne se trouvant sur le territoire national est tenue de se soumettre au contrôle (art. 78-1 C.P.P.).",
-    ],
-  },
-  {
-    titre: "3. Autorités habilitées",
-    points: [
-      "O.P.J.",
-      "A.P.J. et certains A.P.J.A., sous responsabilité de l'O.P.J., seulement dans les cas spécifiques prévus par la loi (art. 78-2-2 et 78-2-4 C.P.P.)",
-      "Réservistes de la police et de la gendarmerie nationales",
-      "Hors de ces cas, les A.P.J.A. peuvent seulement relever l'identité, en cas de contravention.",
-    ],
-  },
-  {
-    titre: "4. Moyens de preuve d'identité",
-    points: [
-      "Documents officiels probants",
-      "D'autres documents",
-      "Recours à des témoignages",
-    ],
-  },
-  {
-    titre: "5.A — Contrôles judiciaires (art. 78-2 al.1 à al.7 C.P.P.)",
-    points: [
-      "À l'initiative des policiers, si la personne : al.2 est soupçonnée de commettre ou tenter de commettre une infraction",
-      "al.3 est soupçonnée de se préparer à commettre un crime ou un délit",
-      "al.4 est susceptible de fournir des renseignements utiles à l'enquête",
-      "al.5 a violé les obligations ou interdictions auxquelles elle est soumise",
-      "al.6 fait l'objet de recherches judiciaires",
-      "Sur réquisitions écrites du procureur (al.7) : réquisitions écrites, précisant les infractions recherchées, déterminant les lieux et la durée — contrôle de toute personne dans la zone.",
-    ],
-  },
-  {
-    titre: "5.B — Contrôles d'identité préventifs (art. 78-2 al.8 C.P.P.)",
-    points: [
-      "Pour prévenir une atteinte à l'ordre public",
-      "Porte sur toute personne en lieu public ou ouvert au public (gares, rassemblements...)",
-      "Doit être motivé par des éléments objectifs (ex : alerte à la bombe, attroupement)",
-    ],
-  },
-  {
-    titre: "5.C — Contrôles en zone frontalière (art. 78-2 al.9 à 17 C.P.P.)",
-    points: [
-      "Zone Schengen : 20 km de la frontière, non permanent, 12h maximum, aléatoire",
-      "Zone similaire aux abords des gares/aéroports internationaux : 10 km",
-      "DOM-TOM : Guyane, Guadeloupe, Martinique, Mayotte, Saint-Martin, Saint-Barthélemy → zone entière désignable",
-    ],
-  },
-  {
-    titre: "5.D — Contrôles en locaux professionnels (art. 78-2-1 C.P.P.)",
-    points: [
-      "Lutte contre le travail dissimulé",
-      "Sur réquisitions du procureur visant les locaux professionnels et leurs annexes",
-      "Pour 1 mois maximum",
-      "S'applique à toute personne présente",
-    ],
-  },
-  {
-    titre: "5.E — Contrôles, visite de véhicules et inspection visuelle des bagages (art. 78-2-2 à 78-2-5 C.P.P.)",
-    points: [
-      "78-2-2 : sur réquisitions du procureur, les A.P.J./A.P.J.A. assistent les O.P.J. pour la visite des véhicules, l'inspection ou la fouille des bagages, la visite d'embarcations (recherche de terrorisme, stupéfiants...)",
-      "78-2-3 : en cas de crime ou délit flagrant, les A.P.J./A.P.J.A. peuvent assister les O.P.J. à la visite des véhicules",
-      "78-2-4 : pour une atteinte grave à la sécurité des personnes/biens, sous responsabilité O.P.J. — visite, inspection ou fouille des bagages (30 minutes maximum)",
-      "78-2-5 : aux abords d'une manifestation, recherche d'armes sur réquisitions écrites du procureur (durée maximale 24h)",
-      "Modalités : véhicule immobilisé pendant la visite, en présence du conducteur/propriétaire ; bagages inspectés/fouillés en présence du propriétaire, retenu seulement pour le temps nécessaire",
-      "PV rédigé si : découverte d'une infraction, demande du conducteur/propriétaire, ou visite en son absence",
-    ],
-  },
-  {
-    titre: "6. Vérification d'identité (art. 78-3 C.P.P.)",
-    points: [
-      "En cas de refus ou d'incapacité à justifier son identité : retenue sur place ou en local de police",
-      "Retenue avec un O.P.J., 4h maximum (8h à Mayotte)",
-      "Droits notifiés : aviser le procureur de la vérification, prévenir sa famille ou une personne de son choix",
-    ],
-  },
-  {
-    titre: "7. Vérification de situation (suspicion terroriste)",
-    points: [
-      "Si raisons sérieuses de soupçonner un lien avec des activités terroristes : retenue jusqu'à vérification du niveau de menace",
-      "Retenue 4h maximum, en présence d'un O.P.J.",
-    ],
-  },
-];
 
-const CONTROLE_IDENTITE_QUESTIONS = [
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité se définit comme :",
-    options: ["Une arrestation temporaire pour vérification", "L'invitation faite à une personne de justifier immédiatement de son identité", "Une fouille corporelle systématique", "Une mesure réservée aux personnes majeures"],
-    correct: 1,
-    explication: "Le contrôle d'identité est l'invitation faite à une personne de justifier immédiatement de son identité.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "En vertu de l'art. 78-1 C.P.P., qui est tenu de se soumettre à un contrôle d'identité ?",
-    options: ["Uniquement les personnes majeures", "Toute personne se trouvant sur le territoire national", "Uniquement les personnes de nationalité française", "Uniquement les personnes véhiculées"],
-    correct: 1,
-    explication: "L'art. 78-1 C.P.P. prévoit que toute personne se trouvant sur le territoire national est tenue de se soumettre au contrôle de son identité.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Parmi ces autorités, laquelle n'est pas habilitée à réaliser un contrôle d'identité, même sous conditions ?",
-    options: ["Un O.P.J.", "Un A.P.J.", "Un réserviste de la police ou de la gendarmerie nationale", "Un agent de sécurité privée"],
-    correct: 3,
-    explication: "Les O.P.J., les A.P.J. (et certains A.P.J.A. sous conditions), ainsi que les réservistes de la police et de la gendarmerie nationale peuvent être habilités — pas les agents de sécurité privée.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Hors des cas spécifiques prévus par les art. 78-2-2 et 78-2-4 C.P.P., que peut faire un A.P.J.A. en matière de contrôle d'identité ?",
-    options: ["Un contrôle d'identité complet, comme un O.P.J.", "Seulement relever l'identité, en cas de contravention", "Aucun acte, sous aucun prétexte", "Une fouille intégrale"],
-    correct: 1,
-    explication: "Hors ces cas particuliers, un A.P.J.A. ne peut que relever l'identité d'une personne, en cas de contravention.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Parmi ces moyens, lequel n'est pas un moyen de preuve d'identité reconnu ?",
-    options: ["Des documents officiels probants", "D'autres documents", "Le recours à des témoignages", "Une simple déclaration verbale non corroborée"],
-    correct: 3,
-    explication: "Les moyens reconnus sont les documents officiels probants, d'autres documents, et le recours à des témoignages — une simple déclaration verbale non appuyée ne suffit pas.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité judiciaire à l'initiative des policiers (art. 78-2 al.2 C.P.P.) peut être réalisé lorsque la personne est soupçonnée de :",
-    options: ["Avoir un comportement suspect sans autre précision", "Avoir commis ou tenté de commettre une infraction", "Être simplement présente sur les lieux d'une infraction", "Ne pas porter de pièce d'identité sur elle"],
-    correct: 1,
-    explication: "L'art. 78-2 al.2 C.P.P. permet le contrôle d'une personne soupçonnée d'avoir commis ou tenté de commettre une infraction.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Selon l'art. 78-2 al.3 C.P.P., un contrôle d'identité peut être réalisé si la personne est soupçonnée de :",
-    options: ["Se préparer à commettre un crime ou un délit", "Avoir déjà été condamnée par le passé", "Résider dans un quartier sensible", "Avoir un casier judiciaire"],
-    correct: 0,
-    explication: "L'art. 78-2 al.3 C.P.P. permet le contrôle d'une personne soupçonnée de se préparer à commettre un crime ou un délit.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Selon l'art. 78-2 al.4 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
-    options: ["Est mineure", "Est susceptible de fournir des renseignements utiles à l'enquête", "Porte un sac à dos", "Se trouve seule dans la rue"],
-    correct: 1,
-    explication: "L'art. 78-2 al.4 C.P.P. permet le contrôle d'une personne susceptible de fournir des renseignements utiles à l'enquête en cours.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Selon l'art. 78-2 al.5 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
-    options: ["A violé des obligations ou interdictions auxquelles elle est soumise", "Est en état d'ébriété", "Refuse de répondre à une question anodine", "Porte une tenue inhabituelle"],
-    correct: 0,
-    explication: "L'art. 78-2 al.5 C.P.P. permet le contrôle d'une personne ayant violé des obligations ou interdictions auxquelles elle est soumise (contrôle judiciaire, interdiction de paraître...).",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Selon l'art. 78-2 al.6 C.P.P., un contrôle d'identité peut être réalisé si la personne :",
-    options: ["Fait l'objet de recherches judiciaires", "Est simplement inconnue de l'agent", "Refuse de saluer un policier", "A un accent étranger"],
-    correct: 0,
-    explication: "L'art. 78-2 al.6 C.P.P. permet le contrôle d'une personne faisant l'objet de recherches ordonnées par une autorité judiciaire.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Sur réquisitions écrites du procureur de la République (art. 78-2 al.7 C.P.P.), ces réquisitions doivent notamment :",
-    options: ["Rester orales pour plus de rapidité", "Être écrites, préciser les infractions recherchées, déterminer les lieux et la durée", "Être valables sans limite de durée", "Ne viser qu'une seule personne nommément désignée"],
-    correct: 1,
-    explication: "Les réquisitions du procureur doivent être écrites, préciser les infractions recherchées, et déterminer les lieux et la durée du contrôle, qui s'applique alors à toute personne se trouvant dans la zone visée.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité préventif de police administrative (art. 78-2 al.8 C.P.P.) a pour but :",
-    options: ["De rechercher systématiquement un mandat d'arrêt", "De prévenir une atteinte à l'ordre public", "De vérifier le paiement d'une amende", "De constater une infraction déjà commise uniquement"],
-    correct: 1,
-    explication: "Le contrôle préventif de police administrative vise à prévenir une atteinte à l'ordre public, notamment à la sécurité des personnes ou des biens.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité préventif de police administrative doit être motivé par :",
-    options: ["Une simple intuition de l'agent", "Des éléments objectifs, comme une alerte à la bombe ou un attroupement", "Un ordre écrit du maire uniquement", "Aucune motivation n'est requise"],
-    correct: 1,
-    explication: "Ce contrôle doit être motivé par des éléments objectifs déduits de circonstances extérieures à la personne elle-même, comme une alerte à la bombe ou un attroupement.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Dans la zone Schengen, le contrôle d'identité en zone frontalière peut être réalisé jusqu'à quelle distance de la frontière ?",
-    options: ["5 km", "10 km", "20 km", "50 km"],
-    correct: 2,
-    explication: "En zone Schengen, le contrôle d'identité en zone frontalière peut être réalisé jusqu'à 20 km de la frontière.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité en zone frontalière est-il permanent ?",
-    options: ["Oui, sans limite de durée", "Non, il est non permanent, limité à 12h maximum et aléatoire", "Oui, mais seulement la nuit", "Non, il est interdit"],
-    correct: 1,
-    explication: "Ce contrôle n'est pas permanent : il est limité à 12 heures maximum et doit être aléatoire.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Aux abords des gares et aéroports ouverts au trafic international, la zone de contrôle similaire s'étend jusqu'à :",
-    options: ["5 km", "10 km", "20 km", "30 km"],
-    correct: 1,
-    explication: "Une zone de contrôle similaire de 10 km s'applique aux abords des gares et aéroports ouverts au trafic international.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Dans les DOM-TOM, quels territoires peuvent voir leur zone entière désignée pour ce type de contrôle ?",
-    options: ["La Guyane, la Guadeloupe, la Martinique, Mayotte, Saint-Martin et Saint-Barthélemy", "Uniquement la Guyane", "Uniquement les territoires du Pacifique", "Aucun territoire ultramarin n'est concerné"],
-    correct: 0,
-    explication: "En Guyane, à la Guadeloupe, en Martinique, à Mayotte, à Saint-Martin et à Saint-Barthélemy, la zone entière peut être désignée pour ce contrôle.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité en locaux professionnels (art. 78-2-1 C.P.P.) vise notamment à lutter contre :",
-    options: ["Le vol à l'étalage", "Le travail dissimulé", "La fraude fiscale des particuliers", "Le trafic de stupéfiants uniquement"],
-    correct: 1,
-    explication: "Ce contrôle vise notamment à lutter contre le travail dissimulé, sur réquisitions du procureur visant les locaux professionnels et leurs annexes.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité en locaux professionnels, sur réquisitions du procureur, est autorisé pour une durée maximale de :",
-    options: ["15 jours", "1 mois", "3 mois", "6 mois"],
-    correct: 1,
-    explication: "Ce contrôle est autorisé pour une durée maximale d'1 mois, sur réquisitions du procureur visant les locaux professionnels désignés.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Sur réquisitions écrites du procureur (art. 78-2-2 C.P.P.), les A.P.J. et A.P.J.A. peuvent notamment assister les O.P.J. pour :",
-    options: ["Prononcer une amende forfaitaire", "La visite des véhicules, l'inspection visuelle ou la fouille des bagages", "Décider seuls d'une garde à vue", "Rédiger un réquisitoire"],
-    correct: 1,
-    explication: "Sur réquisitions écrites du procureur, pour des infractions comme le terrorisme ou les stupéfiants, les A.P.J. et A.P.J.A. peuvent assister les O.P.J. pour la visite des véhicules et l'inspection ou la fouille des bagages.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "En cas de crime ou de délit flagrant, l'art. 78-2-3 C.P.P. permet aux A.P.J. et A.P.J.A. de :",
-    options: ["Prononcer eux-mêmes une mise en examen", "Assister les O.P.J. à la visite des véhicules", "Décider seuls d'une perquisition", "Placer seuls une personne en garde à vue"],
-    correct: 1,
-    explication: "En cas de crime ou de délit flagrant, les A.P.J. et A.P.J.A. peuvent assister les O.P.J. à la visite des véhicules (art. 78-2-3 C.P.P.).",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Face à une atteinte grave à la sécurité des personnes et des biens (art. 78-2-4 C.P.P.), la visite du véhicule et l'inspection des bagages sont limitées à une durée maximale de :",
-    options: ["15 minutes", "30 minutes", "1 heure", "2 heures"],
-    correct: 1,
-    explication: "Dans ce cadre, sous la responsabilité d'un O.P.J., ces opérations sont limitées à une durée maximale de 30 minutes.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "L'art. 78-2-5 C.P.P. permet la fouille des bagages et la visite des véhicules aux abords d'une manifestation, en vue de rechercher :",
-    options: ["Des documents d'identité falsifiés", "Des armes, sur réquisitions écrites du procureur", "Des produits stupéfiants uniquement", "Des billets de manifestation contrefaits"],
-    correct: 1,
-    explication: "L'art. 78-2-5 C.P.P. autorise, sur réquisitions écrites du procureur, la recherche d'armes aux abords d'une manifestation susceptible de troubles, pour une durée maximale de 24h.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Lors de la visite d'un véhicule dans le cadre d'un contrôle d'identité, le véhicule doit être :",
-    options: ["Détruit si une infraction est découverte", "Immobilisé pendant le temps de la visite, en présence du conducteur ou du propriétaire", "Conduit au commissariat systématiquement", "Fouillé sans présence obligatoire de qui que ce soit"],
-    correct: 1,
-    explication: "Le véhicule est immobilisé pendant le temps de la visite, qui se déroule en présence du conducteur ou du propriétaire.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Dans quel cas un procès-verbal doit-il être rédigé à la suite d'une visite de véhicule ou d'une fouille de bagages ?",
-    options: ["Uniquement si le conducteur en fait la demande", "En cas de découverte d'une infraction, à la demande du conducteur/propriétaire, ou si la visite s'est déroulée en son absence", "Jamais, sauf réquisition ultérieure du procureur", "Uniquement si un objet est saisi"],
-    correct: 1,
-    explication: "Un PV est rédigé en cas de découverte d'une infraction, si le conducteur ou le propriétaire du véhicule/bagage le demande, ou si la visite s'est déroulée en son absence.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Que prévoit l'art. 78-3 C.P.P. en cas de refus ou d'incapacité à justifier son identité lors d'un contrôle ?",
-    options: ["La personne est immédiatement placée en garde à vue", "La personne peut être retenue sur place ou en local de police, pour vérification", "Aucune mesure particulière n'est prévue", "La personne est systématiquement relâchée"],
-    correct: 1,
-    explication: "En cas de refus ou d'incapacité à justifier son identité, la personne peut être retenue sur place ou dans un local de police pour vérification (art. 78-3 C.P.P.).",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Dans le cadre de la vérification d'identité de l'art. 78-3 C.P.P., la retenue est réalisée sous quelle autorité, et pour quelle durée maximale de droit commun ?",
-    options: ["Sous l'autorité d'un A.P.J.A., maximum 2h", "Sous l'autorité d'un O.P.J., maximum 4h", "Sous l'autorité du procureur, maximum 24h", "Sans limite de durée"],
-    correct: 1,
-    explication: "La retenue pour vérification d'identité se fait avec un O.P.J., pour une durée maximale de 4 heures (portée à 8 heures à Mayotte).",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "À Mayotte, la durée maximale de retenue pour vérification d'identité (art. 78-3 C.P.P.) est de :",
-    options: ["4 heures, comme partout ailleurs", "6 heures", "8 heures", "12 heures"],
-    correct: 2,
-    explication: "À Mayotte, la durée maximale de retenue pour vérification d'identité est portée à 8 heures, contre 4 heures dans le reste du territoire.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Lors d'une vérification d'identité (art. 78-3 C.P.P.), quels droits sont notifiés à la personne retenue ?",
-    options: ["Le droit de refuser toute vérification", "Le droit d'aviser le procureur de la vérification dont elle fait l'objet et de prévenir sa famille ou une personne de son choix", "Le droit à un avocat immédiat, comme en garde à vue", "Aucun droit particulier n'est notifié"],
-    correct: 1,
-    explication: "La personne retenue est notifiée de son droit d'aviser le procureur de la vérification dont elle fait l'objet et de prévenir sa famille ou une personne de son choix.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "La « vérification de situation » (retenue liée à une suspicion terroriste) permet de retenir une personne :",
-    options: ["Jusqu'à vérification de son niveau de menace, en présence d'un O.P.J.", "Indéfiniment, sans limite", "Uniquement avec l'accord préalable d'un juge d'instruction", "Seulement si elle est déjà connue des services"],
-    correct: 0,
-    explication: "S'il existe des raisons sérieuses de soupçonner un lien avec des activités à caractère terroriste, la personne peut être retenue jusqu'à vérification de sa situation, en présence d'un O.P.J.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Quelle est la durée maximale de la retenue dans le cadre d'une vérification de situation liée à une suspicion terroriste ?",
-    options: ["2 heures", "4 heures", "6 heures", "12 heures"],
-    correct: 1,
-    explication: "Cette retenue est limitée à 4 heures maximum, en présence d'un officier de police judiciaire.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Dans le cadre d'un contrôle d'identité en locaux professionnels, à qui les réquisitions du procureur doivent-elles s'appliquer ?",
-    options: ["À tout le territoire national", "Aux locaux professionnels désignés et à leurs annexes", "Uniquement aux entrepôts industriels", "Uniquement aux commerces de nuit"],
-    correct: 1,
-    explication: "Les réquisitions du procureur pour ce type de contrôle visent des locaux professionnels précisément désignés, ainsi que leurs annexes.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Concernant l'inspection visuelle des bagages et la fouille dans le cadre d'un contrôle de véhicule, en présence de qui doivent-elles se dérouler ?",
-    options: ["D'un simple témoin quelconque", "Du propriétaire du bagage", "D'un magistrat obligatoirement présent", "D'aucune personne en particulier"],
-    correct: 1,
-    explication: "L'inspection visuelle des bagages et leur fouille se déroulent en présence du propriétaire du bagage, qui ne peut être retenu que pour le temps nécessaire au déroulement des opérations.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Sur quel fondement légal repose la fouille des bagages d'une personne porteuse d'une arme lors d'une manifestation ?",
-    options: ["Art. 78-2-5 C.P.P., sur réquisitions écrites du procureur pour la recherche d'armes", "Art. 63 C.P.P., comme pour une garde à vue classique", "Aucun texte ne prévoit cette situation", "Art. 122-5 C.P., légitime défense"],
-    correct: 0,
-    explication: "L'art. 78-2-5 C.P.P. permet, sur réquisitions écrites du procureur, la fouille des bagages et la visite des véhicules pour la recherche d'armes aux abords d'une manifestation.",
-  },
-  {
-    matiere: "Contrôle d'identité",
-    question: "Le contrôle d'identité de police administrative (78-2 al.8) peut-il porter sur une personne se trouvant dans un lieu ouvert au public ?",
-    options: ["Non, uniquement sur la voie publique", "Oui, il porte sur toute personne en lieu public ou ouvert au public", "Non, uniquement dans les lieux privés", "Oui, mais seulement dans les gares"],
-    correct: 1,
-    explication: "Ce contrôle préventif porte sur toute personne se trouvant dans un lieu public ou ouvert au public (gares, lieux de rassemblement...).",
-  },
-];
 
 
 const MINDMAPS = {
@@ -8634,64 +8540,6 @@ function FacsimilePV({ C, exemple, canevas }) {
   );
 }
 
-function ControleIdentite({ C, onActifChange, onDemanderConfirmation }) {
-  const [mode, setMode] = useState("fiche");
-  const [sectionOuverte, setSectionOuverte] = useState(0);
-
-  const changerMode = (nouveauMode) => {
-    setMode(nouveauMode);
-  };
-
-  return (
-    <div>
-      <Eyebrow C={C}>Procédure pénale — art. 78-1 à 78-3 C.P.P.</Eyebrow>
-      <SectionTitle C={C}>Contrôle d'identité</SectionTitle>
-
-      <div className="flex gap-2 mb-6">
-        {[{ id: "fiche", label: "Fiche de synthèse" }, { id: "qcm", label: `S'entraîner (${CONTROLE_IDENTITE_QUESTIONS.length} questions)` }].map((m) => {
-          const active = mode === m.id;
-          return (
-            <button key={m.id} onClick={() => changerMode(m.id)} className="text-sm px-4 py-2 rounded-md font-semibold"
-              style={{ border: `1px solid ${active ? C.navy : C.line}`, background: active ? C.navy : "transparent", color: active ? "#fff" : C.slate }}>
-              {m.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {mode === "fiche" && (
-        <div className="flex flex-col gap-3 max-w-3xl">
-          {FICHE_CONTROLE_IDENTITE.map((section, i) => {
-            const ouverte = sectionOuverte === i;
-            return (
-              <Card C={C} key={section.titre} className="p-4">
-                <button onClick={() => setSectionOuverte(ouverte ? null : i)} className="w-full flex items-center justify-between text-left">
-                  <span className="font-bold text-sm" style={{ color: C.ink }}>{section.titre}</span>
-                  <span style={{ color: C.gold }}>{ouverte ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
-                </button>
-                {ouverte && (
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {section.points.map((pt, j) => (
-                      <li key={j} className="text-sm leading-relaxed flex items-start gap-2" style={{ color: C.slate }}>
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: C.gold }} />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </Card>
-            );
-          })}
-        </div>
-      )}
-
-      {mode === "qcm" && (
-        <QCMExamen C={C} questions={CONTROLE_IDENTITE_QUESTIONS} onActifChange={onActifChange} onDemanderConfirmation={onDemanderConfirmation} />
-      )}
-    </div>
-  );
-}
-
 function ExemplePV({ C }) {
   const [theme, setTheme] = useState(null);
   const [recherche, setRecherche] = useState("");
@@ -9867,7 +9715,6 @@ export default function App() {
           {safeTab === "fiches" && <DocumentDPGDPS C={C} student={student} cibleFiche={cibleFiche} onCibleConsommee={() => setCibleFiche(null)} />}
           {safeTab === "articles" && <ArticlesLoi C={C} student={student} />}
           {safeTab === "examens" && <ExamensBlancs C={C} student={student} onExamEnCoursChange={(v) => { examEnCoursRef.current = v; }} onDemanderConfirmation={demanderConfirmation} />}
-          {safeTab === "controle-identite" && <ControleIdentite C={C} onActifChange={(v) => { examEnCoursRef.current = v; }} onDemanderConfirmation={demanderConfirmation} />}
           {safeTab === "pv" && <EntrainementPV C={C} student={student} />}
           {safeTab === "exemple-pv" && <ExemplePV C={C} student={student} />}
           {safeTab === "support" && <SupportTab C={C} student={student} />}
